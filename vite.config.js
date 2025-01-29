@@ -12,5 +12,13 @@ export default defineConfig({
         autoprefixer
       ],
     }
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: true
+  },
+  server: {
+    port: 3000,
+    host: true
   }
 })
