@@ -7,7 +7,7 @@ const NotFound = () => {
       <header className="top-header"></header>
       
       {/* Dust particles */}
-      <div>
+      <div className="dust-container">
         <div className="starsec"></div>
         <div className="starthird"></div>
         <div className="starfourth"></div>
