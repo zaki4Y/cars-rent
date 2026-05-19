@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { registerUser } from '../data/users';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
+import SEO from '../components/SEO';
 
 const Register = () => {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', password: '', confirmPassword: '' });
@@ -47,6 +48,11 @@ const Register = () => {
 
   return (
     <div className="pt-28 min-h-screen flex items-center justify-center">
+      <SEO
+        title="Create Account — DriveEase"
+        description="Create your DriveEase account to book premium luxury vehicles, manage reservations, and access exclusive member offers."
+        noindex
+      />
       <div className="section-container max-w-md w-full">
         <div className="text-center mb-10">
           <p className="section-label">Join DriveEase</p>

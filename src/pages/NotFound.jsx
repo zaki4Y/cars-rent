@@ -1,9 +1,15 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 
 const NotFound = () => {
   return (
     <div className="error-page">
+      <SEO
+        title="Page Not Found — DriveEase"
+        description="The page you're looking for may have been moved or no longer exists. Return to DriveEase homepage to browse our premium car rental fleet."
+        noindex
+      />
       <div className="error-page__number">404</div>
 
       <div className="error-page__content">

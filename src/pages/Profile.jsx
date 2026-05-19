@@ -6,6 +6,7 @@ import { updateUser } from '../data/users';
 import { getBookingsByUserId, getBookingStatus } from '../data/bookings';
 import { useToast } from '../context/ToastContext';
 import { FiCalendar, FiKey, FiCheckCircle, FiLogOut, FiGrid, FiEdit2, FiSave, FiX } from 'react-icons/fi';
+import SEO from '../components/SEO';
 
 const AnimatedCounter = ({ target, duration = 1200 }) => {
   const [count, setCount] = useState(0);
@@ -88,6 +89,11 @@ const Profile = () => {
 
   return (
     <div className="pt-28 min-h-screen pb-20">
+      <SEO
+        title="My Profile — DriveEase"
+        description="Manage your DriveEase profile, view account details, and track your booking history."
+        noindex
+      />
       <div className="section-container max-w-4xl mx-auto">
         <motion.div
           variants={containerVariants}

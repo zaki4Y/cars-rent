@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import SEO from '../components/SEO';
 
 const About = () => {
   const stats = [
@@ -16,6 +17,12 @@ const About = () => {
 
   return (
     <div className="pt-28 min-h-screen">
+      <SEO
+        title="About DriveEase — 10+ Years of Premium Car Rental"
+        description="Learn about DriveEase, New York's premier car rental service. Over 100 luxury vehicles, 5,000+ satisfied clients, and a decade of automotive excellence."
+        keywords="about DriveEase, car rental company New York, luxury rental service, premium car rental history"
+        canonical="https://driveease.com/about"
+      />
       <div className="section-container">
         {/* Page header */}
         <div className="text-center mb-20">

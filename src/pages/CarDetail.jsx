@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 import { FaChevronLeft, FaChevronRight, FaUsers, FaGasPump, FaCog, FaTachometerAlt, FaBolt, FaRoad, FaFlagCheckered } from 'react-icons/fa';
 import { getCarById, carsData } from '../data/cars';
 import { saveBooking, isCarAvailable, hasActiveBooking, getActiveBooking, setCarUnavailable } from '../data/bookings';
@@ -9,6 +10,7 @@ import { StarRating } from '../components/StarRating';
 import { ReviewsSection } from '../components/ReviewsSection';
 import BookingModal from '../components/BookingModal';
 import CarCard from '../components/CarCard';
+import SEO from '../components/SEO';
 
 const specIcons = {
   engine: { icon: <FaCog />, label: 'Engine' },
@@ -93,6 +95,13 @@ const CarDetail = () => {
 
   return (
     <div className="pt-28 min-h-screen">
+      <SEO
+        title={`Rent ${car.name} — ${car.type} | DriveEase`}
+        description={`${car.description} Starting at $${car.price}/day. ${car.seats} seats, ${car.fuelType}, ${car.transmission}. Book now with free cancellation.`}
+        keywords={`rent ${car.name}, ${car.type} rental, ${car.name} price, luxury ${car.type.toLowerCase()} rental New York`}
+        canonical={`https://driveease.com/cars/${car.id}`}
+        ogType="product"
+      />
       <div className="section-container">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm text-text-muted mb-8">
@@ -116,7 +125,41 @@ const CarDetail = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4 }}
-              />
+      />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "name": car.name,
+          "description": car.description,
+          "image": car.gallery,
+          "brand": { "@type": "Brand", "name": car.name.split(' ')[0] },
+          "offers": {
+            "@type": "Offer",
+            "price": car.price,
+            "priceCurrency": "USD",
+            "availability": available ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+            "url": `https://driveease.com/cars/${car.id}`,
+            "priceValidUntil": "2026-12-31",
+            "seller": { "@type": "Organization", "name": "DriveEase" }
+          },
+          "additionalProperty": [
+            { "@type": "PropertyValue", "name": "Type", "value": car.type },
+            { "@type": "PropertyValue", "name": "Seats", "value": car.seats },
+            { "@type": "PropertyValue", "name": "Fuel Type", "value": car.fuelType },
+            { "@type": "PropertyValue", "name": "Transmission", "value": car.transmission }
+          ]
+        })}</script>
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://driveease.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Fleet", "item": "https://driveease.com/cars" },
+            { "@type": "ListItem", "position": 3, "name": car.name, "item": `https://driveease.com/cars/${car.id}` }
+          ]
+        })}</script>
+      </Helmet>
             </AnimatePresence>
             <div className="absolute inset-0 bg-gradient-to-t from-bg/80 via-transparent to-transparent" />
 

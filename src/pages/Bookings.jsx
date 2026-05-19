@@ -5,6 +5,7 @@ import { getBookingsByUserId, cancelBooking, getBookingStatus } from '../data/bo
 import { BookingCard } from '../components/BookingCard';
 import { useToast } from '../context/ToastContext';
 import { useAuth } from '../context/AuthContext';
+import SEO from '../components/SEO';
 
 const tabs = [
   { key: 'active', label: 'Active' },
@@ -44,6 +45,11 @@ const Bookings = () => {
 
   return (
     <div className="pt-28 min-h-screen">
+      <SEO
+        title="My Bookings — DriveEase"
+        description="Manage your DriveEase reservations, view upcoming pickups, and track your rental history."
+        noindex
+      />
       <div className="section-container">
         <div className="text-center mb-16">
           <p className="section-label">Dashboard</p>

@@ -11,6 +11,7 @@ import {
 import { getAverageRating } from '../data/reviews';
 import { StarRating } from '../components/StarRating';
 import BookingModal from '../components/BookingModal';
+import SEO from '../components/SEO';
 
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
@@ -118,6 +119,12 @@ const Cars = () => {
 
   return (
     <div className="pt-28 min-h-screen">
+      <SEO
+        title="Our Fleet — Luxury Cars, SUVs & Sports Cars for Rent"
+        description={`Explore our fleet of ${carsData.length} premium vehicles. Luxury sedans, SUVs, sports cars and electric vehicles. Competitive daily rates with comprehensive insurance included.`}
+        keywords="luxury car fleet, rent SUV, rent sports car, electric car rental, premium vehicles, car rental collection"
+        canonical="https://driveease.com/cars"
+      />
       <div className="section-container">
         <div className="text-center mb-16">
           <p className="section-label">The Fleet</p>

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { loginUser } from '../data/users';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
+import SEO from '../components/SEO';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -29,6 +30,11 @@ const Login = () => {
 
   return (
     <div className="pt-28 min-h-screen flex items-center justify-center">
+      <SEO
+        title="Sign In — DriveEase"
+        description="Sign in to your DriveEase account to manage bookings, reserve vehicles, and access exclusive offers."
+        noindex
+      />
       <div className="section-container max-w-md w-full">
         <div className="text-center mb-10">
           <p className="section-label">Welcome Back</p>
