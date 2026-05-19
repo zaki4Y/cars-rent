@@ -1,5 +1,6 @@
 import { Formik, Form, Field } from "formik";
 import DatePicker from "react-datepicker";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import * as Yup from 'yup';
 import "react-datepicker/dist/react-datepicker.css";
@@ -12,6 +13,8 @@ const SearchSchema = Yup.object().shape({
 });
 
 const SearchForm = () => {
+  const navigate = useNavigate();
+
   return (
     <Formik
       initialValues={{
@@ -21,66 +24,62 @@ const SearchForm = () => {
       }}
       validationSchema={SearchSchema}
       onSubmit={(values) => {
-        console.log(values);
+        const params = new URLSearchParams();
+        if (values.pickupLocation) params.set('search', values.pickupLocation);
+        params.set('pickupDate', values.pickupDate.toISOString().split('T')[0]);
+        params.set('returnDate', values.returnDate.toISOString().split('T')[0]);
+        navigate(`/cars?${params.toString()}`);
       }}
     >
       {({ values, setFieldValue, errors, touched }) => (
-        <Form className="glass-card p-6 rounded-xl">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Location */}
+        <Form id="search-form" className="luxury-card rounded-lg p-6 md:p-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-gold mb-2">
                 Pickup Location
               </label>
               <Field
                 name="pickupLocation"
-                className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg
-                         text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary
-                         focus:border-transparent transition-all duration-200"
-                placeholder="Enter location"
+                className="input-luxury rounded"
+                placeholder="City, airport, or address"
               />
               {errors.pickupLocation && touched.pickupLocation && (
-                <div className="text-red-500 text-sm mt-1">{errors.pickupLocation}</div>
+                <p className="text-red-400 text-xs mt-1">{errors.pickupLocation}</p>
               )}
             </div>
 
-            {/* Pickup Date */}
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-gold mb-2">
                 Pickup Date
               </label>
               <DatePicker
                 selected={values.pickupDate}
                 onChange={date => setFieldValue('pickupDate', date)}
-                className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg
-                         text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary
-                         focus:border-transparent transition-all duration-200"
+                className="input-luxury rounded"
                 minDate={new Date()}
+                dateFormat="MMMM d, yyyy"
               />
             </div>
 
-            {/* Return Date */}
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-gold mb-2">
                 Return Date
               </label>
               <DatePicker
                 selected={values.returnDate}
                 onChange={date => setFieldValue('returnDate', date)}
-                className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg
-                         text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary
-                         focus:border-transparent transition-all duration-200"
+                className="input-luxury rounded"
                 minDate={values.pickupDate}
+                dateFormat="MMMM d, yyyy"
               />
             </div>
           </div>
 
           <motion.button
             type="submit"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="mt-6 w-full py-3 bg-primary text-white rounded-lg font-medium
-                     hover:bg-primary-dark transition-colors duration-300"
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
+            className="btn-primary w-full mt-6 rounded"
           >
             Search Available Cars
           </motion.button>

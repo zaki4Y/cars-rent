@@ -1,24 +1,19 @@
 import { motion } from 'framer-motion';
-import { FaCar } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const Logo = ({ className = '' }) => {
   return (
-    <motion.div 
-      className={`flex items-center gap-2 ${className}`}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-    >
-      <div className="relative">
-        <div className="absolute -inset-1 bg-gradient-to-r from-primary to-primary-light blur-sm opacity-75" />
-        <div className="relative bg-black rounded-full p-2">
-          <FaCar className="w-6 h-6 text-primary" />
-        </div>
-      </div>
-      <span className="text-2xl font-bold bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">
+    <Link to="/" className={`flex flex-col ${className}`}>
+      <motion.span
+        className="font-display text-2xl md:text-3xl font-semibold tracking-wide text-text-primary"
+        whileHover={{ opacity: 0.8 }}
+        transition={{ duration: 0.3 }}
+      >
         DriveEase
-      </span>
-    </motion.div>
+      </motion.span>
+      <div className="h-px w-full bg-gold/40 mt-0.5" />
+    </Link>
   );
 };
 
-export default Logo; 
+export default Logo;

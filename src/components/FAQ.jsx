@@ -5,73 +5,92 @@ const FAQ = () => {
   const faqs = [
     {
       question: "How do I rent a car?",
-      answer: "Renting a car is easy! Simply browse our selection, choose your dates, and complete the booking form. We'll handle the rest."
+      answer: "Simply browse our collection, select your preferred vehicle and dates, then complete the booking form. Our concierge team will confirm your reservation within the hour."
     },
     {
-      question: "What documents do I need?",
-      answer: "You'll need a valid driver's license, credit card, and proof of insurance. International renters may need additional documentation."
+      question: "What documents are required?",
+      answer: "A valid driver's license, credit card in the primary driver's name, and proof of insurance. International clients may require an International Driving Permit."
     },
     {
       question: "Is insurance included?",
-      answer: "Basic insurance is included in all rentals. Additional coverage options are available for extra peace of mind."
+      answer: "Comprehensive insurance is included with every rental. Additional coverage options are available for enhanced peace of mind."
     },
     {
       question: "Can I modify or cancel my reservation?",
-      answer: "Yes, you can modify or cancel your reservation up to 24 hours before pickup without any fees."
+      answer: "Reservations may be modified or cancelled without charge up to 24 hours before the scheduled pickup time."
     },
     {
-      question: "What's your fuel policy?",
-      answer: "We provide cars with a full tank, and we ask that you return them with a full tank. This ensures fair pricing for all customers."
-    }
+      question: "What is your fuel policy?",
+      answer: "All vehicles are provided with a full tank and should be returned the same way. This ensures transparent and fair pricing for all clients."
+    },
   ];
 
   const [activeIndex, setActiveIndex] = useState(null);
 
   return (
-    <section className="section-padding glass-card">
-      <div className="max-w-4xl mx-auto px-4">
+    <section className="section-padding">
+      <div className="section-container">
         <div className="text-center mb-16">
-          <h2 className="section-title">Frequently Asked Questions</h2>
-          <p className="section-description">Find answers to common questions about our car rental service</p>
+          <p className="section-label">FAQ</p>
+          <h2 className="section-title mb-4">Common Questions</h2>
+          <p className="section-subtitle mx-auto">
+            Everything you need to know about renting with DriveEase.
+          </p>
         </div>
 
-        <div className="space-y-4">
-          {faqs.map((faq, index) => (
-            <div
-              key={index}
-              className="glass-card rounded-lg overflow-hidden hover-lift"
-            >
-              <button
-                onClick={() => setActiveIndex(activeIndex === index ? null : index)}
-                className="flex justify-between items-center w-full p-4 text-left text-white hover:bg-gray-800/50 transition-colors"
+        <div className="max-w-3xl mx-auto space-y-4">
+          {faqs.map((faq, index) => {
+            const isActive = activeIndex === index;
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.08 }}
+                className={`faq-card ${isActive ? 'active' : ''}`}
               >
-                <span className="font-medium">{faq.question}</span>
-                <motion.span
-                  animate={{ rotate: activeIndex === index ? 180 : 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="transform"
+                <button
+                  onClick={() => setActiveIndex(isActive ? null : index)}
+                  className="flex items-center gap-4 w-full text-left"
                 >
-                  ▼
-                </motion.span>
-              </button>
+                  <span className="faq-number">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span className="flex-1 font-display text-xl text-text-primary group-hover:text-gold transition-colors duration-300 pr-4">
+                    {faq.question}
+                  </span>
+                  <div className="faq-icon">
+                    <motion.span
+                      animate={{ rotate: isActive ? 45 : 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="text-sm"
+                    >
+                      +
+                    </motion.span>
+                  </div>
+                </button>
 
-              <AnimatePresence>
-                {activeIndex === index && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
-                  >
-                    <p className="p-4 text-gray-300">
-                      {faq.answer}
-                    </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          ))}
+                <AnimatePresence>
+                  {isActive && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="pt-4 pb-2 pl-[64px]">
+                        <p className="text-text-secondary font-light leading-relaxed">
+                          {faq.answer}
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

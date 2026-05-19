@@ -7,23 +7,32 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Plus Jakarta Sans', 'sans-serif'],
+        display: ['Cormorant Garamond', 'Georgia', 'serif'],
+        body: ['Manrope', '-apple-system', 'sans-serif'],
       },
       colors: {
-        primary: {
-          DEFAULT: '#3B82F6', // blue-500
-          dark: '#2563EB',    // blue-600
-          light: '#60A5FA',   // blue-400
+        gold: {
+          DEFAULT: '#C9A96E',
+          light: '#D4BA85',
+          dark: '#A8894F',
         },
-        secondary: {
-          DEFAULT: '#1F2937', // gray-800
-          dark: '#111827',    // gray-900
-          light: '#6B7280',    // gray-700
-        }
-      }
+        cream: '#F5F0EB',
+        surface: {
+          DEFAULT: '#141414',
+          hover: '#1e1e1e',
+        },
+        bg: {
+          DEFAULT: '#0a0a0a',
+          elevated: '#111111',
+          subtle: '#1a1a1a',
+        },
+        text: {
+          primary: '#FAFAF8',
+          secondary: '#A09B93',
+          muted: '#6B6560',
+        },
+      },
     },
   },
   plugins: [],
-  // Add this to exclude node_modules from processing
-  ignoreFiles: ['node_modules/**/*.css'],
 }

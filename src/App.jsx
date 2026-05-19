@@ -1,64 +1,70 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
+import { AuthProvider } from './context/AuthContext';
+import { ToastProvider } from './context/ToastContext';
+import { ProtectedRoute } from './context/AuthContext';
 import Header from './components/Header';
 import Home from './pages/Home';
 import Cars from './pages/Cars';
+import CarDetail from './pages/CarDetail';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import Bookings from './pages/Bookings';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
 import Footer from './components/Footer';
-import { motion } from 'framer-motion';
+import BackToTop from './components/BackToTop';
 
-function AppContent() {
+function AnimatedRoutes() {
   const location = useLocation();
-  const is404Page = location.pathname !== '/' && 
-                    location.pathname !== '/cars' && 
-                    location.pathname !== '/about' && 
-                    location.pathname !== '/contact';
-
-  if (is404Page) {
-    return <NotFound />;
-  }
+  const knownPaths = ['/', '/cars', '/about', '/contact', '/login', '/register', '/my-bookings', '/profile'];
+  const isCarDetail = location.pathname.startsWith('/cars/') && location.pathname !== '/cars';
+  const is404 = !knownPaths.includes(location.pathname) && !isCarDetail;
 
   return (
-    <div className="min-h-screen bg-black/[0.96] relative overflow-hidden">
-      {/* Background gradient */}
-      <div className="fixed inset-0 bg-gradient-to-b from-black via-gray-950 to-black pointer-events-none" />
-      
-      {/* Content */}
-      <div className="relative z-10">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <Header />
-        </motion.div>
-
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/cars" element={<Cars />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <Footer />
-        </motion.div>
-      </div>
-    </div>
+    <AnimatePresence mode="wait">
+      <motion.main
+        key={location.pathname + (is404 ? '-404' : '')}
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      >
+        {is404 ? (
+          <NotFound />
+        ) : (
+          <>
+            <Header />
+            <Routes location={location}>
+              <Route path="/" element={<Home />} />
+              <Route path="/cars" element={<Cars />} />
+              <Route path="/cars/:id" element={<CarDetail />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/my-bookings" element={<ProtectedRoute><Bookings /></ProtectedRoute>} />
+              <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+            </Routes>
+            <Footer />
+            <BackToTop />
+          </>
+        )}
+      </motion.main>
+    </AnimatePresence>
   );
 }
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="*" element={<AppContent />} />
-      </Routes>
+      <AuthProvider>
+        <ToastProvider>
+          <AnimatedRoutes />
+        </ToastProvider>
+      </AuthProvider>
     </Router>
   );
 }

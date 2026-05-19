@@ -6,16 +6,14 @@ import FAQ from '../components/FAQ';
 
 const Home = () => {
   return (
-    <main className="space-y-8">
+    <main>
       <Hero />
-      <div className="space-y-8 px-4">
-        <FeaturedCars />
-        <WhyChooseUs />
-        <Testimonials />
-        <FAQ />
-      </div>
+      <FeaturedCars />
+      <WhyChooseUs />
+      <Testimonials />
+      <FAQ />
     </main>
   );
 };
 
-export default Home; 
+export default Home;
