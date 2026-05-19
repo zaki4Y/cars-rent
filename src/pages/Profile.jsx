@@ -3,9 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { updateUser } from '../data/users';
-import { getBookings, getBookingStatus } from '../data/bookings';
+import { getBookingsByUserId, getBookingStatus } from '../data/bookings';
 import { useToast } from '../context/ToastContext';
-import { FiCalendar, FiKey, FiCheckCircle, FiLogOut, FiGrid, FiUser, FiEdit2, FiSave, FiX } from 'react-icons/fi';
+import { FiCalendar, FiKey, FiCheckCircle, FiLogOut, FiGrid, FiEdit2, FiSave, FiX } from 'react-icons/fi';
 
 const AnimatedCounter = ({ target, duration = 1200 }) => {
   const [count, setCount] = useState(0);
@@ -51,7 +51,7 @@ const Profile = () => {
     return null;
   }
 
-  const allBookings = getBookings().map(b => ({ ...b, status: getBookingStatus(b) }));
+  const allBookings = getBookingsByUserId(user.id).map(b => ({ ...b, status: getBookingStatus(b) }));
   const activeBookings = allBookings.filter(b => b.status === 'active' || b.status === 'upcoming');
   const completedBookings = allBookings.filter(b => b.status === 'completed');
   const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);

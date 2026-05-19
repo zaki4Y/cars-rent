@@ -24,7 +24,7 @@ import { useToast } from '../context/ToastContext';
 
 const CarDetail = () => {
   const { id } = useParams();
-  const { isAuthenticated } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const { addToast } = useToast();
   const navigate = useNavigate();
   const car = getCarById(id);
@@ -56,8 +56,8 @@ const CarDetail = () => {
       addToast('This vehicle is currently booked.', 'error');
       return;
     }
-    if (hasActiveBooking()) {
-      const active = getActiveBooking();
+    if (hasActiveBooking(user.id)) {
+      const active = getActiveBooking(user.id);
       addToast(`You have an active booking until ${new Date(active.returnDate).toLocaleDateString()}.`, 'error');
       return;
     }
@@ -69,13 +69,14 @@ const CarDetail = () => {
     saveBooking({
       carId: car.id,
       carName: car.name,
+      userId: user.id,
       pickupDate: bookingDetails.pickupDate,
       returnDate: bookingDetails.returnDate,
       pickupLocation: bookingDetails.pickupLocation,
       pickupTime: bookingDetails.pickupTime,
       returnTime: bookingDetails.returnTime,
       totalPrice: bookingDetails.totalPrice,
-    });
+    }, user.id);
     setCarUnavailable(car.id, bookingDetails.returnDate);
     addToast(`${car.name} reserved successfully!`, 'success');
     setSelectedCar(null);

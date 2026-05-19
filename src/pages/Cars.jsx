@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { FaSearch, FaUsers, FaGasPump, FaCog, FaSort } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { carsData, priceRanges } from '../data/cars';
@@ -16,7 +16,7 @@ import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 
 const Cars = () => {
-  const { isAuthenticated } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const { addToast } = useToast();
   const [searchParams] = useSearchParams();
   const [filters, setFilters] = useState({ type: 'all', priceRange: 'all' });
@@ -79,8 +79,8 @@ const Cars = () => {
       addToast(`This ${car.name} is booked until ${new Date(avail.bookedUntil).toLocaleDateString()}.`, 'error');
       return;
     }
-    if (hasActiveBooking()) {
-      const active = getActiveBooking();
+    if (hasActiveBooking(user.id)) {
+      const active = getActiveBooking(user.id);
       addToast(`You have an active booking until ${new Date(active.returnDate).toLocaleDateString()}.`, 'error');
       return;
     }
@@ -92,13 +92,14 @@ const Cars = () => {
     saveBooking({
       carId: selectedCar.id,
       carName: selectedCar.name,
+      userId: user.id,
       pickupDate: bookingDetails.pickupDate,
       returnDate: bookingDetails.returnDate,
       pickupLocation: bookingDetails.pickupLocation,
       pickupTime: bookingDetails.pickupTime,
       returnTime: bookingDetails.returnTime,
       totalPrice: bookingDetails.totalPrice,
-    });
+    }, user.id);
     setAvailability(prev => ({
       ...prev,
       [selectedCar.id]: { available: false, bookedUntil: bookingDetails.returnDate }
@@ -113,7 +114,7 @@ const Cars = () => {
     setTimeout(() => setSelectedCar(null), 200);
   };
 
-  const activeBooking = getActiveBooking();
+  const activeBooking = getActiveBooking(user?.id);
 
   return (
     <div className="pt-28 min-h-screen">

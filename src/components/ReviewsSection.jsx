@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { StarRating } from './StarRating';
 import { getReviews, addReview, deleteReview, getAverageRating } from '../data/reviews';
+import { useAuth } from '../context/AuthContext';
 
 export function ReviewsSection({ carId }) {
+  const { user } = useAuth();
   const [reviews, setReviews] = useState([]);
   const [average, setAverage] = useState({ average: 0, count: 0 });
   const [showForm, setShowForm] = useState(false);
@@ -19,10 +21,10 @@ export function ReviewsSection({ carId }) {
     e.preventDefault();
     if (!formData.name.trim() || !formData.comment.trim()) return;
     addReview(carId, {
-      name: formData.name.trim(),
+      name: user?.name || formData.name.trim(),
       rating: formData.rating,
       comment: formData.comment.trim(),
-    });
+    }, user?.id || null);
     setReviews(getReviews(carId));
     setAverage(getAverageRating(carId));
     setFormData({ name: '', rating: 5, comment: '' });
@@ -32,7 +34,8 @@ export function ReviewsSection({ carId }) {
   };
 
   const handleDelete = (reviewId) => {
-    deleteReview(carId, reviewId);
+    if (!user) return;
+    deleteReview(carId, reviewId, user.id);
     setReviews(getReviews(carId));
     setAverage(getAverageRating(carId));
   };
@@ -93,13 +96,15 @@ export function ReviewsSection({ carId }) {
                   </div>
                   <div className="flex items-center gap-2">
                     <StarRating rating={review.rating} size="sm" />
-                    <button
-                      onClick={() => handleDelete(review.id)}
-                      className="text-text-muted hover:text-red-400 text-xs transition-colors ml-2"
-                      aria-label="Delete review"
-                    >
-                      &times;
-                    </button>
+                    {user && review.userId === user.id && (
+                      <button
+                        onClick={() => handleDelete(review.id)}
+                        className="text-text-muted hover:text-red-400 text-xs transition-colors ml-2"
+                        aria-label="Delete review"
+                      >
+                        &times;
+                      </button>
+                    )}
                   </div>
                 </div>
                 <p className="text-text-secondary text-sm font-light leading-relaxed">{review.comment}</p>

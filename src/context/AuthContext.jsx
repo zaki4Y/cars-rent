@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getCurrentUser, logoutUser as logoutUserFn } from '../data/users';
+import { getCurrentUser, logoutUser as logoutUserFn, migratePlaintextPasswords } from '../data/users';
 
 const AuthContext = createContext(null);
 
@@ -9,9 +9,11 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const current = getCurrentUser();
-    setUser(current);
-    setLoading(false);
+    migratePlaintextPasswords().then(() => {
+      const current = getCurrentUser();
+      setUser(current);
+      setLoading(false);
+    });
   }, []);
 
   const login = (userData) => {

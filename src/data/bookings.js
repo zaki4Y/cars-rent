@@ -10,10 +10,11 @@ export function getBookings() {
   }
 }
 
-export function saveBooking(booking) {
+export function saveBooking(booking, userId) {
   const bookings = getBookings();
   const newBooking = {
-    id: `booking_${Date.now()}`,
+    id: crypto.randomUUID(),
+    userId,
     status: new Date(booking.pickupDate) > new Date() ? 'upcoming' : 'active',
     ...booking,
     createdAt: new Date().toISOString(),
@@ -23,10 +24,11 @@ export function saveBooking(booking) {
   return newBooking;
 }
 
-export function cancelBooking(bookingId) {
+export function cancelBooking(bookingId, userId) {
   const bookings = getBookings();
   const idx = bookings.findIndex(b => b.id === bookingId);
   if (idx === -1) return false;
+  if (userId && bookings[idx].userId !== userId) return false;
   bookings[idx].status = 'cancelled';
   localStorage.setItem(BOOKINGS_KEY, JSON.stringify(bookings));
 
@@ -104,14 +106,16 @@ export function setCarAvailable(carId) {
   localStorage.setItem(AVAILABILITY_KEY, JSON.stringify(avail));
 }
 
-export function hasActiveBooking() {
-  const bookings = getBookings();
+export function hasActiveBooking(userId) {
+  if (!userId) return false;
+  const bookings = getBookings().filter(b => b.userId === userId);
   const now = new Date();
   return bookings.some(b => (b.status === 'active' || b.status === 'upcoming') && new Date(b.returnDate) > now);
 }
 
-export function getActiveBooking() {
-  const bookings = getBookings();
+export function getActiveBooking(userId) {
+  if (!userId) return null;
+  const bookings = getBookings().filter(b => b.userId === userId);
   const now = new Date();
   return bookings.find(b => (b.status === 'active' || b.status === 'upcoming') && new Date(b.returnDate) > now) || null;
 }

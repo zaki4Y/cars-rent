@@ -18,12 +18,13 @@ export function getReviews(carId) {
   return all[carId] || [];
 }
 
-export function addReview(carId, review) {
+export function addReview(carId, review, userId) {
   const all = getAllReviews();
   if (!all[carId]) all[carId] = [];
   const newReview = {
-    id: `review_${Date.now()}`,
+    id: crypto.randomUUID(),
     date: new Date().toISOString(),
+    userId: userId || null,
     ...review,
   };
   all[carId].unshift(newReview);
@@ -31,9 +32,12 @@ export function addReview(carId, review) {
   return newReview;
 }
 
-export function deleteReview(carId, reviewId) {
+export function deleteReview(carId, reviewId, userId) {
   const all = getAllReviews();
   if (!all[carId]) return false;
+  const review = all[carId].find(r => r.id === reviewId);
+  if (!review) return false;
+  if (review.userId && review.userId !== userId) return false;
   all[carId] = all[carId].filter(r => r.id !== reviewId);
   saveAllReviews(all);
   return true;

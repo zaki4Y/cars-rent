@@ -1,5 +1,8 @@
+import { hashPassword, verifyPassword } from '../lib/crypto';
+
 const USERS_KEY = 'driveease_users';
 const CURRENT_USER_KEY = 'driveease_current_user';
+const MIGRATION_KEY = 'driveease_password_migration_v1';
 
 function getAllUsers() {
   try {
@@ -14,33 +17,67 @@ function saveAllUsers(users) {
   localStorage.setItem(USERS_KEY, JSON.stringify(users));
 }
 
-export function registerUser({ name, email, phone, password }) {
+function isPasswordHashed(password) {
+  return /^[a-f0-9]{64}$/.test(password);
+}
+
+export async function migratePlaintextPasswords() {
+  if (localStorage.getItem(MIGRATION_KEY)) return;
+  const users = getAllUsers();
+  let migrated = false;
+  for (const user of users) {
+    if (user.password && !isPasswordHashed(user.password)) {
+      user.password = await hashPassword(user.password);
+      migrated = true;
+    }
+  }
+  if (migrated) {
+    saveAllUsers(users);
+  }
+  localStorage.setItem(MIGRATION_KEY, 'done');
+}
+
+export async function registerUser({ name, email, phone, password }) {
   const users = getAllUsers();
   if (users.find(u => u.email === email)) {
     return { success: false, message: 'An account with this email already exists.' };
   }
+  const hashedPassword = await hashPassword(password);
   const newUser = {
-    id: `user_${Date.now()}`,
+    id: crypto.randomUUID(),
     name,
     email,
     phone: phone || '',
-    password,
+    password: hashedPassword,
     createdAt: new Date().toISOString(),
   };
   users.push(newUser);
   saveAllUsers(users);
-  setCurrentUser(newUser);
-  return { success: true, user: newUser };
+  setCurrentUser({ id: newUser.id, name: newUser.name, email: newUser.email, phone: newUser.phone, createdAt: newUser.createdAt });
+  return { success: true, user: { id: newUser.id, name: newUser.name, email: newUser.email, phone: newUser.phone, createdAt: newUser.createdAt } };
 }
 
-export function loginUser(email, password) {
+export async function loginUser(email, password) {
   const users = getAllUsers();
-  const user = users.find(u => u.email === email && u.password === password);
+  const user = users.find(u => u.email === email);
   if (!user) {
     return { success: false, message: 'Invalid email or password.' };
   }
-  setCurrentUser(user);
-  return { success: true, user };
+  let isValid = false;
+  if (isPasswordHashed(user.password)) {
+    isValid = await verifyPassword(password, user.password);
+  } else {
+    isValid = user.password === password;
+    if (isValid) {
+      user.password = await hashPassword(password);
+      saveAllUsers(users);
+    }
+  }
+  if (!isValid) {
+    return { success: false, message: 'Invalid email or password.' };
+  }
+  setCurrentUser({ id: user.id, name: user.name, email: user.email, phone: user.phone, createdAt: user.createdAt });
+  return { success: true, user: { id: user.id, name: user.name, email: user.email, phone: user.phone, createdAt: user.createdAt } };
 }
 
 export function logoutUser() {

@@ -18,12 +18,16 @@ const Register = () => {
       addToast('Passwords do not match.', 'error');
       return;
     }
-    if (formData.password.length < 4) {
-      addToast('Password must be at least 4 characters.', 'error');
+    if (formData.password.length < 8) {
+      addToast('Password must be at least 8 characters.', 'error');
+      return;
+    }
+    if (!/[A-Z]/.test(formData.password) || !/[a-z]/.test(formData.password) || !/[0-9]/.test(formData.password)) {
+      addToast('Password must contain uppercase, lowercase, and a number.', 'error');
       return;
     }
     setLoading(true);
-    const result = registerUser({
+    const result = await registerUser({
       name: formData.name,
       email: formData.email,
       phone: formData.phone,
@@ -68,7 +72,7 @@ const Register = () => {
 
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider text-gold mb-2">Password</label>
-              <input type="password" value={formData.password} onChange={handleChange('password')} className="input-luxury rounded" placeholder="Min. 4 characters" required />
+                <input type="password" value={formData.password} onChange={handleChange('password')} className="input-luxury rounded" placeholder="Min. 8 characters" required />
             </div>
 
             <div>

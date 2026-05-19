@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { getBookings, cancelBooking, getBookingStatus } from '../data/bookings';
+import { getBookingsByUserId, cancelBooking, getBookingStatus } from '../data/bookings';
 import { BookingCard } from '../components/BookingCard';
 import { useToast } from '../context/ToastContext';
+import { useAuth } from '../context/AuthContext';
 
 const tabs = [
   { key: 'active', label: 'Active' },
@@ -13,15 +14,17 @@ const tabs = [
 ];
 
 const Bookings = () => {
+  const { user } = useAuth();
   const { addToast } = useToast();
   const [activeTab, setActiveTab] = useState('active');
   const [bookings, setBookings] = useState([]);
   const [cancelConfirm, setCancelConfirm] = useState(null);
 
   useEffect(() => {
-    const all = getBookings().map(b => ({ ...b, status: getBookingStatus(b) }));
+    if (!user) return;
+    const all = getBookingsByUserId(user.id).map(b => ({ ...b, status: getBookingStatus(b) }));
     setBookings(all);
-  }, []);
+  }, [user]);
 
   const filtered = bookings.filter(b => b.status === activeTab);
 
@@ -30,9 +33,9 @@ const Bookings = () => {
   };
 
   const confirmCancel = () => {
-    if (cancelConfirm) {
-      cancelBooking(cancelConfirm);
-      const all = getBookings().map(b => ({ ...b, status: getBookingStatus(b) }));
+    if (cancelConfirm && user) {
+      cancelBooking(cancelConfirm, user.id);
+      const all = getBookingsByUserId(user.id).map(b => ({ ...b, status: getBookingStatus(b) }));
       setBookings(all);
       setCancelConfirm(null);
       addToast('Booking cancelled successfully.', 'success');

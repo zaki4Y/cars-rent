@@ -103,7 +103,9 @@ const Contact = () => {
                 width="100%"
                 height="100%"
                 style={{ border: 0, filter: 'grayscale(1) contrast(1.1) brightness(0.7)' }}
-                allowFullScreen=""
+                sandbox="allow-scripts allow-same-origin"
+                referrerPolicy="no-referrer"
+                allow="fullscreen"
                 loading="lazy"
                 title="Our Location"
               />
