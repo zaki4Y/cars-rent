@@ -29,7 +29,7 @@ const Contact = () => {
         {/* Page header */}
         <div className="text-center mb-20">
           <p className="section-label">Get in Touch</p>
-          <h1 className="section-title mb-6">Contact Us</h1>
+          <h1 className="section-title mb-6">Contact DriveEase</h1>
           <p className="section-subtitle mx-auto">
             We&apos;re here to assist with any inquiries about our fleet or services.
           </p>

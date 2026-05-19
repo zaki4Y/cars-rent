@@ -28,9 +28,9 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
           >
-            Drive the
+            Premium Car Rental
             <br />
-            <span className="italic text-gold">Extraordinary</span>
+            <span className="italic text-gold">in New York</span>
           </motion.h1>
 
           <motion.p

@@ -59,9 +59,20 @@ const About = () => {
           className="max-w-3xl mx-auto text-center mb-24"
         >
           <div className="gold-divider mx-auto w-16 mb-8" />
-          <p className="font-display text-2xl md:text-3xl text-text-primary italic leading-relaxed font-light">
+          <p className="font-display text-2xl md:text-3xl text-text-primary italic leading-relaxed font-light mb-8">
             At DriveEase, we&apos;re committed to providing exceptional car rental experiences through our premium fleet, outstanding service, and innovative solutions. We believe in making luxury accessible and every journey memorable.
           </p>
+          <div className="text-text-secondary font-light leading-relaxed space-y-4 max-w-2xl mx-auto">
+            <p>
+              Founded in 2014, DriveEase began with a simple idea: car rental should feel effortless. Our founder, John Smith, spent 15 years in the automotive industry and saw firsthand how the traditional rental experience fell short — hidden fees, worn-out vehicles, and impersonal service. He set out to build something different.
+            </p>
+            <p>
+              Today, our fleet of over 100 vehicles spans the world&apos;s finest manufacturers. We partner directly with brands like Mercedes-Benz, BMW, Porsche, and Tesla to ensure every car meets our exacting standards. Our team of automotive enthusiasts personally inspects each vehicle before it joins the collection.
+            </p>
+            <p>
+              What sets us apart is our commitment to transparency and care. No surprise charges at checkout. No worn interiors or neglected maintenance. Just premium vehicles, delivered with the attention to detail you deserve. Whether it&apos;s your first rental or your fiftieth, we treat every client like a valued guest.
+            </p>
+          </div>
           <div className="gold-divider mx-auto w-16 mt-8" />
         </motion.div>
 
@@ -81,7 +92,7 @@ const About = () => {
                 className="luxury-card rounded-lg overflow-hidden group"
               >
                 <div className="relative h-72 overflow-hidden">
-                  <img src={member.image} alt={member.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0" />
+                  <img src={member.image} alt={member.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0" loading="lazy" decoding="async" width="400" height="288" />
                   <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent" />
                 </div>
                 <div className="p-6">

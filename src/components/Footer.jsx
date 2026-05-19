@@ -73,9 +73,9 @@ const Footer = () => {
             &copy; 2026 DriveEase. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <a href="#" className="text-text-muted hover:text-gold text-xs transition-colors">Privacy</a>
-            <a href="#" className="text-text-muted hover:text-gold text-xs transition-colors">Terms</a>
-            <a href="#" className="text-text-muted hover:text-gold text-xs transition-colors">Cookies</a>
+            <Link to="/privacy" className="text-text-muted hover:text-gold text-xs transition-colors">Privacy</Link>
+            <Link to="/terms" className="text-text-muted hover:text-gold text-xs transition-colors">Terms</Link>
+            <Link to="/cookies" className="text-text-muted hover:text-gold text-xs transition-colors">Cookies</Link>
           </div>
         </div>
       </div>

@@ -70,7 +70,7 @@ export function BookingCard({ booking, onCancel }) {
 
           <div className="flex items-center gap-3">
             {car && (
-              <Link to={`/cars/${car.id}`} className="btn-outline text-xs py-2.5">
+              <Link to={`/cars/${car.slug}`} className="btn-outline text-xs py-2.5">
                 View Car
               </Link>
             )}

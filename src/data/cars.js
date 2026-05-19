@@ -1,6 +1,7 @@
 export const carsData = [
   {
     id: 1,
+    slug: "tesla-model-3",
     name: "Tesla Model 3",
     type: "Electric",
     price: 90,
@@ -20,6 +21,7 @@ export const carsData = [
   },
   {
     id: 2,
+    slug: "mercedes-benz-s-class",
     name: "Mercedes-Benz S-Class",
     type: "Luxury",
     price: 150,
@@ -39,6 +41,7 @@ export const carsData = [
   },
   {
     id: 3,
+    slug: "bmw-m4",
     name: "BMW M4",
     type: "Sports",
     price: 180,
@@ -58,6 +61,7 @@ export const carsData = [
   },
   {
     id: 4,
+    slug: "porsche-911-gt3",
     name: "Porsche 911 GT3",
     type: "Sports",
     price: 250,
@@ -77,6 +81,7 @@ export const carsData = [
   },
   {
     id: 5,
+    slug: "range-rover-velar",
     name: "Range Rover Velar",
     type: "SUV",
     price: 140,
@@ -96,6 +101,7 @@ export const carsData = [
   },
   {
     id: 6,
+    slug: "audi-rs7",
     name: "Audi RS7",
     type: "Sports",
     price: 200,
@@ -115,6 +121,7 @@ export const carsData = [
   },
   {
     id: 7,
+    slug: "bmw-x7",
     name: "BMW X7",
     type: "SUV",
     price: 160,
@@ -134,6 +141,7 @@ export const carsData = [
   },
   {
     id: 8,
+    slug: "lamborghini-huracan",
     name: "Lamborghini Huracán",
     type: "Supercar",
     price: 300,
@@ -153,6 +161,7 @@ export const carsData = [
   },
   {
     id: 9,
+    slug: "mercedes-amg-gt",
     name: "Mercedes-AMG GT",
     type: "Sports",
     price: 220,
@@ -172,6 +181,7 @@ export const carsData = [
   },
   {
     id: 10,
+    slug: "rolls-royce-cullinan",
     name: "Rolls-Royce Cullinan",
     type: "Luxury",
     price: 400,
@@ -191,6 +201,7 @@ export const carsData = [
   },
   {
     id: 11,
+    slug: "ferrari-f8-tributo",
     name: "Ferrari F8 Tributo",
     type: "Supercar",
     price: 350,
@@ -210,6 +221,7 @@ export const carsData = [
   },
   {
     id: 12,
+    slug: "bentley-flying-spur",
     name: "Bentley Flying Spur",
     type: "Luxury",
     price: 280,
@@ -229,6 +241,7 @@ export const carsData = [
   },
   {
     id: 13,
+    slug: "aston-martin-db12",
     name: "Aston Martin DB12",
     type: "Sports",
     price: 260,
@@ -248,6 +261,7 @@ export const carsData = [
   },
   {
     id: 14,
+    slug: "mclaren-720s",
     name: "McLaren 720S",
     type: "Supercar",
     price: 380,
@@ -267,6 +281,7 @@ export const carsData = [
   },
   {
     id: 15,
+    slug: "mercedes-benz-c-class",
     name: "Mercedes-Benz C-Class",
     type: "Sedan",
     price: 85,
@@ -286,6 +301,7 @@ export const carsData = [
   },
   {
     id: 16,
+    slug: "bmw-5-series",
     name: "BMW 5 Series",
     type: "Sedan",
     price: 95,
@@ -305,6 +321,7 @@ export const carsData = [
   },
   {
     id: 17,
+    slug: "porsche-cayenne",
     name: "Porsche Cayenne",
     type: "SUV",
     price: 170,
@@ -324,6 +341,7 @@ export const carsData = [
   },
   {
     id: 18,
+    slug: "jaguar-f-type",
     name: "Jaguar F-Type",
     type: "Sports",
     price: 190,
@@ -354,4 +372,8 @@ export const priceRanges = [
 
 export function getCarById(id) {
   return carsData.find(c => c.id === Number(id));
+}
+
+export function getCarBySlug(slug) {
+  return carsData.find(c => c.slug === slug);
 }

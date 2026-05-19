@@ -126,13 +126,25 @@ const Cars = () => {
         canonical="https://driveease.com/cars"
       />
       <div className="section-container">
-        <div className="text-center mb-16">
+        <div className="text-center mb-8">
           <p className="section-label">The Fleet</p>
-          <h1 className="section-title mb-4">Our Collection</h1>
+          <h1 className="section-title mb-4">Luxury Car Rental Fleet</h1>
           <p className="section-subtitle mx-auto">
             {carsData.length} exceptional vehicles, each chosen for its character and performance.
           </p>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="max-w-3xl mx-auto text-center mb-12"
+        >
+          <p className="text-text-secondary font-light leading-relaxed">
+            Explore our complete fleet of luxury vehicles available for rent in New York. From executive sedans and family SUVs to high-performance sports cars and electric vehicles, each car in our collection is maintained to the highest standards. All rentals include comprehensive insurance, roadside assistance, and flexible pickup options. Use the filters below to find the perfect vehicle for your needs.
+          </p>
+        </motion.div>
 
         {activeBooking && (
           <motion.div initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} className="mb-8 p-4 border border-gold/20 rounded text-center">
@@ -208,9 +220,9 @@ const Cars = () => {
                 transition={{ duration: 0.5, delay: index * 0.06 }}
               >
                 <div className={`luxury-card rounded-lg overflow-hidden group ${!available ? 'opacity-60 pointer-events-none' : ''}`}>
-                  <Link to={`/cars/${car.id}`} className="block">
+                  <Link to={`/cars/${car.slug}`} className="block">
                     <div className="relative h-56 overflow-hidden">
-                      <img src={car.image} alt={car.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                      <img src={car.image} alt={car.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" decoding="async" width="400" height="224" />
                       <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/20 to-transparent opacity-70 group-hover:opacity-80 transition-opacity duration-500" />
 
                       <div className="absolute top-4 left-4">
@@ -240,7 +252,7 @@ const Cars = () => {
                   </Link>
 
                   <div className="p-6">
-                    <Link to={`/cars/${car.id}`}>
+                    <Link to={`/cars/${car.slug}`}>
                       <h3 className="font-display text-xl text-text-primary group-hover:text-gold transition-colors duration-300 mb-1">
                         {car.name}
                       </h3>

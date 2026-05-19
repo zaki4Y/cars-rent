@@ -13,13 +13,16 @@ import Bookings from './pages/Bookings';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
+import CookiesPolicy from './pages/CookiesPolicy';
 import NotFound from './pages/NotFound';
 import Footer from './components/Footer';
 import BackToTop from './components/BackToTop';
 
 function AnimatedRoutes() {
   const location = useLocation();
-  const knownPaths = ['/', '/cars', '/about', '/contact', '/login', '/register', '/my-bookings', '/profile'];
+  const knownPaths = ['/', '/cars', '/about', '/contact', '/login', '/register', '/my-bookings', '/profile', '/privacy', '/terms', '/cookies'];
   const isCarDetail = location.pathname.startsWith('/cars/') && location.pathname !== '/cars';
   const is404 = !knownPaths.includes(location.pathname) && !isCarDetail;
 
@@ -47,6 +50,9 @@ function AnimatedRoutes() {
               <Route path="/register" element={<Register />} />
               <Route path="/my-bookings" element={<ProtectedRoute><Bookings /></ProtectedRoute>} />
               <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/terms" element={<TermsOfService />} />
+              <Route path="/cookies" element={<CookiesPolicy />} />
             </Routes>
             <Footer />
             <BackToTop />

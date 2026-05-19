@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { FaChevronLeft, FaChevronRight, FaUsers, FaGasPump, FaCog, FaTachometerAlt, FaBolt, FaRoad, FaFlagCheckered } from 'react-icons/fa';
-import { getCarById, carsData } from '../data/cars';
+import { getCarBySlug, carsData } from '../data/cars';
 import { saveBooking, isCarAvailable, hasActiveBooking, getActiveBooking, setCarUnavailable } from '../data/bookings';
 import { getAverageRating } from '../data/reviews';
 import { StarRating } from '../components/StarRating';
@@ -25,11 +25,11 @@ import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 
 const CarDetail = () => {
-  const { id } = useParams();
+  const { slug } = useParams();
   const { user, isAuthenticated } = useAuth();
   const { addToast } = useToast();
   const navigate = useNavigate();
-  const car = getCarById(id);
+  const car = getCarBySlug(slug);
   const [activeImage, setActiveImage] = useState(0);
   const [selectedCar, setSelectedCar] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -99,7 +99,7 @@ const CarDetail = () => {
         title={`Rent ${car.name} — ${car.type} | DriveEase`}
         description={`${car.description} Starting at $${car.price}/day. ${car.seats} seats, ${car.fuelType}, ${car.transmission}. Book now with free cancellation.`}
         keywords={`rent ${car.name}, ${car.type} rental, ${car.name} price, luxury ${car.type.toLowerCase()} rental New York`}
-        canonical={`https://driveease.com/cars/${car.id}`}
+        canonical={`https://driveease.com/cars/${car.slug}`}
         ogType="product"
       />
       <div className="section-container">
@@ -139,7 +139,7 @@ const CarDetail = () => {
             "price": car.price,
             "priceCurrency": "USD",
             "availability": available ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-            "url": `https://driveease.com/cars/${car.id}`,
+            "url": `https://driveease.com/cars/${car.slug}`,
             "priceValidUntil": "2026-12-31",
             "seller": { "@type": "Organization", "name": "DriveEase" }
           },
@@ -156,7 +156,7 @@ const CarDetail = () => {
           "itemListElement": [
             { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://driveease.com/" },
             { "@type": "ListItem", "position": 2, "name": "Fleet", "item": "https://driveease.com/cars" },
-            { "@type": "ListItem", "position": 3, "name": car.name, "item": `https://driveease.com/cars/${car.id}` }
+            { "@type": "ListItem", "position": 3, "name": car.name, "item": `https://driveease.com/cars/${car.slug}` }
           ]
         })}</script>
       </Helmet>
@@ -192,7 +192,7 @@ const CarDetail = () => {
                     idx === activeImage ? 'border-gold' : 'border-transparent opacity-60 hover:opacity-100'
                   }`}
                 >
-                  <img src={img} alt="" className="w-full h-full object-cover" />
+                  <img src={img} alt="" className="w-full h-full object-cover" loading="lazy" decoding="async" />
                 </button>
               ))}
             </div>
@@ -303,7 +303,7 @@ const CarDetail = () => {
             <h2 className="section-title text-3xl mb-10">You May Also Like</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {relatedCars.map((relatedCar) => (
-                <Link key={relatedCar.id} to={`/cars/${relatedCar.id}`}>
+                <Link key={relatedCar.id} to={`/cars/${relatedCar.slug}`}>
                   <CarCard car={relatedCar} />
                 </Link>
               ))}

@@ -41,9 +41,9 @@ const FeaturedCars = () => {
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                <Link to={`/cars/${car.id}`} className="luxury-card rounded-lg overflow-hidden group cursor-pointer block">
+                <Link to={`/cars/${car.slug}`} className="luxury-card rounded-lg overflow-hidden group cursor-pointer block">
                   <div className="relative h-56 overflow-hidden">
-                    <img src={car.image} alt={car.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <img src={car.image} alt={car.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" decoding="async" width="400" height="224" />
                     <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/20 to-transparent opacity-70 group-hover:opacity-80 transition-opacity duration-500" />
 
                     <div className="absolute top-4 left-4">
