@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" exclude-result-prefixes="default">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:sitemap="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" exclude-result-prefixes="sitemap">
 <xsl:output method="html" encoding="UTF-8" indent="yes" doctype-system="about:legacy-compat"/>
 <xsl:template match="/">
 <html lang="en">
@@ -73,17 +73,17 @@
         </tr>
       </thead>
       <tbody>
-        <xsl:for-each select="urlset/url">
+        <xsl:for-each select="sitemap:urlset/sitemap:url">
         <tr>
-          <td><a href="{loc}" target="_blank"><xsl:value-of select="loc"/></a></td>
-          <td><xsl:value-of select="lastmod"/></td>
-          <td><xsl:value-of select="changefreq"/></td>
-          <td class="priority"><xsl:value-of select="priority"/></td>
+          <td><a href="{sitemap:loc}" target="_blank"><xsl:value-of select="sitemap:loc"/></a></td>
+          <td><xsl:value-of select="sitemap:lastmod"/></td>
+          <td><xsl:value-of select="sitemap:changefreq"/></td>
+          <td class="priority"><xsl:value-of select="sitemap:priority"/></td>
         </tr>
         </xsl:for-each>
       </tbody>
     </table>
-    <p class="count"><xsl:value-of select="count(urlset/url)"/> URLs</p>
+    <p class="count"><xsl:value-of select="count(sitemap:urlset/sitemap:url)"/> URLs</p>
   </div>
 </body>
 </html>
