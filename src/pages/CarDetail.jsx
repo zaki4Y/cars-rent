@@ -99,7 +99,6 @@ const CarDetail = () => {
         title={`Rent ${car.name} — ${car.type} | DriveEase`}
         description={`${car.description} Starting at $${car.price}/day. ${car.seats} seats, ${car.fuelType}, ${car.transmission}. Book now with free cancellation.`}
         keywords={`rent ${car.name}, ${car.type} rental, ${car.name} price, luxury ${car.type.toLowerCase()} rental New York`}
-        canonical={`https://driveease.com/cars/${car.slug}`}
         ogType="product"
       />
       <div className="section-container">
@@ -139,7 +138,7 @@ const CarDetail = () => {
             "price": car.price,
             "priceCurrency": "USD",
             "availability": available ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-            "url": `https://driveease.com/cars/${car.slug}`,
+            "url": `${window.location.origin}/cars/${car.slug}`,
             "priceValidUntil": "2026-12-31",
             "seller": { "@type": "Organization", "name": "DriveEase" }
           },
@@ -154,9 +153,9 @@ const CarDetail = () => {
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://driveease.com/" },
-            { "@type": "ListItem", "position": 2, "name": "Fleet", "item": "https://driveease.com/cars" },
-            { "@type": "ListItem", "position": 3, "name": car.name, "item": `https://driveease.com/cars/${car.slug}` }
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": window.location.origin + "/" },
+            { "@type": "ListItem", "position": 2, "name": "Fleet", "item": window.location.origin + "/cars" },
+            { "@type": "ListItem", "position": 3, "name": car.name, "item": `${window.location.origin}/cars/${car.slug}` }
           ]
         })}</script>
       </Helmet>

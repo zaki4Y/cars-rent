@@ -23,7 +23,6 @@ const Contact = () => {
         title="Contact DriveEase — Book Your Premium Car Rental"
         description="Get in touch with DriveEase. Call +1 (555) 123-4567, email hello@driveease.com, or visit us at 123 Avenue Road, New York. Open Mon-Fri 9AM-6PM, weekends 10AM-4PM."
         keywords="contact DriveEase, car rental phone number, car rental New York address, book luxury car"
-        canonical="https://driveease.com/contact"
       />
       <div className="section-container">
         {/* Page header */}

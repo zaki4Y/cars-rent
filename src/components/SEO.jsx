@@ -1,9 +1,10 @@
 import { Helmet } from 'react-helmet-async';
 
 const SEO = ({ title, description, canonical, ogImage, ogType = 'website', keywords, noindex }) => {
-  const siteUrl = 'https://driveease.com';
+  const siteUrl = typeof window !== 'undefined' ? window.location.origin : '';
   const defaultTitle = 'DriveEase — Premium Car Rental in New York';
   const defaultDescription = 'Rent premium luxury vehicles in New York. Browse our curated collection of Mercedes, BMW, Porsche and more. Book online with free cancellation.';
+  const defaultCanonical = typeof window !== 'undefined' ? window.location.href : siteUrl;
 
   return (
     <Helmet>
@@ -11,7 +12,7 @@ const SEO = ({ title, description, canonical, ogImage, ogType = 'website', keywo
       <meta name="description" content={description || defaultDescription} />
       {keywords && <meta name="keywords" content={keywords} />}
       {noindex && <meta name="robots" content="noindex, nofollow" />}
-      <link rel="canonical" href={canonical || siteUrl} />
+      <link rel="canonical" href={canonical || defaultCanonical} />
 
       <meta property="og:type" content={ogType} />
       <meta property="og:title" content={title || defaultTitle} />

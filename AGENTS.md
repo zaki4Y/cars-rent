@@ -44,7 +44,7 @@ Run order: `lint` → `build`. **No test script** — stale README mentions `npm
 - **Schema markup**: AutoRental (index.html), FAQPage (FAQ.jsx), Product + BreadcrumbList (CarDetail.jsx).
 - Auth pages (`/login`, `/register`, `/my-bookings`, `/profile`) and legal pages (`/privacy`, `/terms`, `/cookies`) use `noindex`.
 - Car URLs use SEO-friendly slugs (e.g., `/cars/mercedes-benz-s-class`), not numeric IDs.
-- Replace `driveease.com` in all SEO URLs with actual domain before deploy.
+- All SEO URLs now use `window.location.origin` dynamically (SEO.jsx, CarDetail schema, sitemap). No manual domain replacement needed.
 
 ## Key dependencies
 

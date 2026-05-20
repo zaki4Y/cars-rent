@@ -14,7 +14,6 @@ const Home = () => {
         title="Premium Car Rental in New York — Luxury & Sports Cars"
         description="Rent premium luxury vehicles in New York. Browse our curated collection of Mercedes, BMW, Porsche, SUVs and sports cars. Book online with free cancellation and comprehensive insurance included."
         keywords="car rental New York, luxury car rental, sports car rental, premium car rental, rent Mercedes, rent BMW, SUV rental"
-        canonical="https://driveease.com"
       />
       <Hero />
       <FeaturedCars />
