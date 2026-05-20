@@ -13,6 +13,10 @@
       "destination": "/google68cf1f99367ca6d4.html"
     },
     {
+      "source": "/sitemap.xsl",
+      "destination": "/sitemap.xsl"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
